@@ -1,0 +1,27 @@
+[Unit]
+Description=Giam Sat SSD - SSD Temperature Monitor
+Documentation=man:giam_sat_ssd(8)
+After=network.target
+Wants=network.target
+
+[Service]
+Type=forking
+User=root
+Group=root
+ExecStart=/mnt/mydisk/giam_sat_ssd/bin/giam_sat_ssd.sh start
+ExecStop=/mnt/mydisk/giam_sat_ssd/bin/giam_sat_ssd.sh stop
+ExecReload=/mnt/mydisk/giam_sat_ssd/bin/giam_sat_ssd.sh restart
+PIDFile=/run/giam_sat_ssd.pid
+Restart=always
+RestartSec=10
+KillMode=process
+TimeoutStopSec=30
+
+# Security settings
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/run /var/log /mnt/mydisk/giam_sat_ssd/logs
+
+[Install]
+WantedBy=multi-user.target
